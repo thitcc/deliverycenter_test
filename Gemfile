@@ -12,7 +12,6 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.3'
 gem 'savon'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'redis'
-gem 'rspec-rails', '~> 4.0.1'
 gem 'jaro_winkler'
 gem 'aws-sdk-sqs'
 gem 'rest-client'
@@ -29,6 +28,7 @@ group :development, :test do
   gem 'paranoia'
   gem 'byebug'
   gem 'dotenv-rails'
+  gem 'rspec-rails', '~> 4.0.1'
 end
 
 group :development do

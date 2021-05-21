@@ -1,5 +1,30 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: orders
+#
+#  id              :bigint           not null, primary key
+#  city            :string
+#  complement      :string
+#  country         :string
+#  delivery_fee    :string
+#  district        :string
+#  dt_order_create :string
+#  external_code   :string
+#  latitude        :decimal(10, 6)
+#  longitude       :decimal(10, 6)
+#  number          :string
+#  postal_code     :string
+#  state           :string
+#  street          :string
+#  sub_total       :string
+#  total           :string
+#  total_shipping  :float
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  store_id        :integer
+#
 require "rails_helper"
 
 RSpec.describe Order, type: :model do

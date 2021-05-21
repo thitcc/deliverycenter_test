@@ -21,6 +21,7 @@ group :test do
   gem 'simplecov', require: false
   gem 'rainbow'
   gem 'faker'
+  gem 'database_cleaner-active_record'
 end
 
 group :development, :test do

@@ -12,6 +12,7 @@ SimpleCov.start "rails" do
   add_filter "/db"
   add_filter "/log"
   add_filter "/tmp"
+  add_filter "/app/controllers/api/v1"
 end
 
 SimpleCov.minimum_coverage 92.5

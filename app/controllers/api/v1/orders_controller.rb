@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::OrdersController < ApplicationController
+class Api::V1::OrdersController < Api::V1::BaseController
   before_action :create_order
 
   def create

@@ -5,19 +5,11 @@
 # Table name: orders
 #
 #  id              :bigint           not null, primary key
-#  city            :string
-#  complement      :string
-#  country         :string
 #  delivery_fee    :string
-#  district        :string
 #  dt_order_create :string
 #  external_code   :string
-#  latitude        :decimal(10, 6)
-#  longitude       :decimal(10, 6)
 #  number          :string
 #  postal_code     :string
-#  state           :string
-#  street          :string
 #  sub_total       :string
 #  total           :string
 #  total_shipping  :float
@@ -29,30 +21,21 @@ require "rails_helper"
 
 RSpec.describe Order, type: :model do
   describe "associations" do
-    it { is_expected.to have_one(:customer) }
-    it { is_expected.to have_many(:items) }
-    it { is_expected.to have_many(:payments) }
+    [:customer, :address].each { |attribute| it { should have_one(attribute) } }
 
-    it { is_expected.to accept_nested_attributes_for(:customer) }
-    it { is_expected.to accept_nested_attributes_for(:items) }
-    it { is_expected.to accept_nested_attributes_for(:payments) }
+    [:items, :payments].each { |attribute| it { should have_many(attribute) } }
+
+    [:customer, :items, :payments].each { |attribute| it { should accept_nested_attributes_for(attribute) } }
   end
 
   describe "validations" do
-    it { is_expected.to validate_presence_of(:external_code) }
-    it { is_expected.to validate_presence_of(:store_id) }
-    it { is_expected.to validate_presence_of(:sub_total) }
-    it { is_expected.to validate_presence_of(:delivery_fee) }
-    it { is_expected.to validate_presence_of(:total) }
-    it { is_expected.to validate_presence_of(:country) }
-    it { is_expected.to validate_presence_of(:state) }
-    it { is_expected.to validate_presence_of(:city) }
-    it { is_expected.to validate_presence_of(:district) }
-    it { is_expected.to validate_presence_of(:street) }
-    it { is_expected.to validate_presence_of(:latitude) }
-    it { is_expected.to validate_presence_of(:longitude) }
-    it { is_expected.to validate_presence_of(:dt_order_create) }
-    it { is_expected.to validate_presence_of(:postal_code) }
-    it { is_expected.to validate_presence_of(:number) }
+    [:external_code, 
+      :store_id, 
+      :sub_total, 
+      :delivery_fee, 
+      :total,
+      :dt_order_create, 
+      :postal_code, 
+      :number].each { |attribute| it { should validate_presence_of(attribute) } }
   end
 end

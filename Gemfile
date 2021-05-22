@@ -29,6 +29,7 @@ group :development, :test do
   gem 'rubocop-rails'
   gem 'paranoia'
   gem 'byebug'
+  gem 'pry-byebug'
   gem 'dotenv-rails'
   gem 'rspec-rails', '~> 4.0.1'
   gem 'factory_bot_rails'

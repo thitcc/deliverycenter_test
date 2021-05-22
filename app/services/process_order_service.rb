@@ -1,28 +1,11 @@
 # frozen_string_literal: true
 
 class ProcessOrderService < BaseService
-  URL = URI(ENV["API_URL"]).freeze
+  def call payload, token
+    url = ENV['API_URL'] + '/api/v2/order'
+    
+    response = HTTParty.post(url, { body:  payload, headers: { 'Authorization' => "#{token}", 'X-Sent' => "#{Time.zone.now.strftime("%Hh%M - %d/%m/%y")}" } } )
 
-  def call(payload)
-    response = connection.request(request(payload))
-
-    response.code == "200"
-  end
-
-  private
-
-  def request(body)
-    req = Net::HTTP::Post.new(URL.path)
-    req["Content-Type"] = "application/json"
-    req["X-Sent"] = Time.zone.now.strftime("%Hh%M - %d/%m/%y")
-    req.body = body
-    req
-  end
-
-  def connection
-    http = Net::HTTP.new(URL.host, URL.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    http
+    response.code == 200
   end
 end

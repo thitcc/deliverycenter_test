@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-describe Api::V1::OrdersController, type: :request do
+describe Api::V2::OrdersController, type: :request do
   describe "POST #create" do
     let(:process_service) { instance_spy(ProcessOrderService) }
 
@@ -12,15 +12,17 @@ describe Api::V1::OrdersController, type: :request do
       before do
         allow(process_service).to receive(:call).and_return(true)
 
-        post api_v1_orders_path, params: params
+        post api_v2_orders_path, params: params
       end
 
-      it "respond with 202 status accepted" do
-        expect(response).to have_http_status(:accepted)
-      end
+      include_examples 'http status code', 404
 
       it "create new order" do
         expect(Order.count).to eq(1)
+      end
+
+      it "create new address" do
+        expect(Address.count).to eq(1)
       end
 
       it "create new order items" do
@@ -41,9 +43,7 @@ describe Api::V1::OrdersController, type: :request do
 
       before { post api_v1_orders_path, params: params }
 
-      it "respond with 404 status" do
-        expect(response).to have_http_status(:not_found)
-      end
+      include_examples 'http status code', 404
 
       it "doesnt persists order" do
         expect(Order.count).to eq(0)
@@ -56,12 +56,10 @@ describe Api::V1::OrdersController, type: :request do
       before do
         allow_any_instance_of(ProcessOrderService).to receive(:call).and_return(false)
 
-        post api_v1_orders_path, params: params
+        post api_v2_orders_path, params: params
       end
 
-      it "respond with status service unavailable" do
-        expect(response).to have_http_status(:not_found)
-      end
+      include_examples 'http status code', 404
     end
   end
 end

@@ -15,6 +15,7 @@ gem 'redis'
 gem 'jaro_winkler'
 gem 'aws-sdk-sqs'
 gem 'rest-client'
+gem 'httparty', '~> 0.13.7'
 
 group :test do
   gem 'shoulda-matchers', '~> 4.0'

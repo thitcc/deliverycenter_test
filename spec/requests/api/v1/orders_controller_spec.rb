@@ -15,7 +15,7 @@ describe Api::V2::OrdersController, type: :request do
         post api_v2_orders_path, params: params
       end
 
-      include_examples 'http status code', 404
+      include_examples 'http status code', 202
 
       it "create new order" do
         expect(Order.count).to eq(1)

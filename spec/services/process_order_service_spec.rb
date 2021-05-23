@@ -3,17 +3,21 @@
 require "rails_helper"
 
 describe ProcessOrderService do
-  describe "#connection" do
-    it "returns connection object with ssl" do
-      expect(subject.send(:connection).port).to eq(443)
+  describe "#call" do
+    let(:processed_order_v2) { JSON.parse(File.read("spec/fixtures/processed_order_v2.json")) }
+    let(:url) { ENV['API_URL'] + '/auth/get_token' }
+    let(:response) { HTTParty.get(url) }
+
+    describe "when it succeeds" do
+      it "returns true" do
+        expect(subject.send(:call, processed_order_v2, response['token'])).to be(true)
+      end
     end
-  end
 
-  describe "#request" do
-    it "adds timestamp to header" do
-      header = subject.send(:request, {}.to_json).to_hash["x-sent"][0]
-
-      expect(header).to match(%r{\d{2}h\d{2}\s-\s\d{2}/\d{2}/\d{2}})
+    describe "when it fails" do
+      it "returns false" do
+        expect(subject.send(:call, processed_order_v2, nil)).to be(false)
+      end
     end
   end
 end
